@@ -3,6 +3,11 @@
 
 return {
 
+	{ -- Edit :reg , :di
+		"jmattaa/regedit.vim",
+		cmd = "Regedit",
+	},
+
 	{ -- Registers | copyied-stuff | using `"`,`C-R`
 		"tversteeg/registers.nvim",
 		name = "registers",

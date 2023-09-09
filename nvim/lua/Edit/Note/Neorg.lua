@@ -1,22 +1,30 @@
 --  ╭──────────────────╮
---  │ BAsed not takign │
+--  │ BAsed note takign │
 --  ╰──────────────────╯
 M = {
 
 	{
 		"nvim-neorg/neorg",
 		build = ":Neorg sync-parsers",
-		dependencies = { "nvim-lua/plenary.nvim" },
+		-- ft = "norg",
+		-- cmd = "Neorg",
+		dependencies = { { "nvim-lua/plenary.nvim" }, { "nvim-neorg/neorg-telescope" } },
 		config = function()
 			require("neorg").setup({
 				load = {
 					["core.defaults"] = {}, -- Loads default behaviour
-					["core.concealer"] = {}, -- Adds pretty icons to your documents
+					-- Adds pretty icons to your documents
+					["core.concealer"] = { config = { icon_preset = "diamond" } },
 					["core.dirman"] = { -- Manages Neorg workspaces
 						config = {
 							workspaces = {
-								notes = "~/Desktop/",
+								notes = "~/Documents/notes",
 							},
+							["core.export"] = {}, -- File export to md
+							-- external
+							["core.completion"] = { config = { engine = "nvim-cmp", name = "[Norg]" } },
+							["core.integrations.nvim-cmp"] = {}, -- neorg with cmp
+							["core.integrations.telescope"] = {}, -- 3rd-patry integrations of telescope
 						},
 					},
 				},
@@ -24,4 +32,5 @@ M = {
 		end,
 	},
 }
+
 return M

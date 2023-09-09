@@ -31,16 +31,12 @@ vim.cmd("cnoreabbrev WQ wq")
 
 -- if not vim.g.neovide then
 --Colorscheme
--- local colorscheme = "oh-lucy"
-local colorscheme = "oh-lucy-evening"
-
 -- vim.cmd("au ColorScheme * hi Normal ctermbg=none guibg=none") -- Dimming | dim
--- vim.cmd("au ColorScheme myspecialcolors hi Normal ctermbg=red guibg=red") -- Dimming | dim
--- local colorscheme = "darcubox"
+-- local colorscheme = "oh-lucy"
+-- local colorscheme = "oh-lucy-evening"
 -- local colorscheme = "aura"
+local colorscheme = "rose-pine"
 -- require("UI.Colors.rosepine")
---  local colorscheme = "accent"
--- local colorscheme = "aura"
 -- local colorscheme = "blue-moon"
 -- local colorscheme = "kanagawa-dragon"   -- kanagawa
 -- local colorscheme = "kanagawa-wave"   -- kanagawa

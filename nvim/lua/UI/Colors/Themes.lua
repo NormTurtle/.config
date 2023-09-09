@@ -6,7 +6,7 @@ return {
 	-- },
 
 	--Theme
-	-- 'rebelot/kanagawa.nvim', -- inspired of gruv+dracula
+	"rebelot/kanagawa.nvim", -- inspired of gruv+dracula
 	{
 		"techtuner/aura-neovim", -- aura theme
 		event = "ColorScheme",
@@ -16,7 +16,7 @@ return {
 	-- 'voidekh/kyotonight.vim',
 	-- { 'catppuccin/nvim', name = "catppuccin",},
 	{ "rose-pine/neovim", name = "rose-pine" },
-	{ "kyazdani42/blue-moon" }, -- hurt blule eye
+	-- { "kyazdani42/blue-moon" }, -- hurt blule eye
 	-- "dotsilas/darcubox-nvim",
 	-- -- My Beloved dark somber,stern shit
 	-- 'huyvohcmc/atlas.vim', -- very minimal no code highlight 🗿

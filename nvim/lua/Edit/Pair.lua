@@ -6,7 +6,7 @@ local M = {
 		event = {
 			"InsertEnter",--[[  "CmdlineEnter"  ]]
 		},
-		keys = ":",
+		keys = { ":" },
 		config = function()
 			require("ultimate-autopair").setup({})
 		end,
@@ -17,9 +17,14 @@ local M = {
 	-- 	event = "InsertEnter",
 	-- 	dependencies = {
 	-- 		"nvim-treesitter/nvim-treesitter",
-	-- 		"hrsh7th/nvim-cmp",
 	-- 	},
-	-- 	config = true,
+	-- 	config = function()
+	-- 		require("tabout").setup({})
+	-- 		vim.api.nvim_set_keymap("i", "<A-x>", "<Plug>(TaboutMulti)", { silent = true })
+	-- 		vim.api.nvim_set_keymap("i", "<A-z>", "<Plug>(TaboutBackMulti)", { silent = true })
+	-- 	end,
+	-- 	-- config = true,
 	-- },
 }
+
 return M

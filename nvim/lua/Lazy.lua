@@ -8,7 +8,6 @@
 --https://github.com/chrisgrieser/nvim-early-retirement
 -- note taking
 --https://github.com/epwalsh/obsidian.nvim
---if using NEORG  https://github.com/pysan3/Norg-Tutorial
 --https://github.com/preservim/vim-markdown
 --https://github.com/rareitems/anki.nvim
 -- https://github.com/Dhanus3133/Leetbuddy.nvim -- leetcode in neovim
@@ -30,7 +29,7 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({
 
 	--         ╭──────────────────────────────────────────────────────────╮
-	--         │                     UI, Ux for NVIm                      │
+	--         │                     UI, Ux for NVIM                      │
 	--         ╰──────────────────────────────────────────────────────────╯
 	--  ╭─────────────────╮
 	--  │ Themes | Colors │
@@ -43,16 +42,22 @@ require("lazy").setup({
 	--  ╭────────────╮
 	--  │ Fold | UFO │
 	--  ╰────────────╯
-	{ import = "UI.Fold.Plugs" },
+	-- { import = "UI.Fold.UF0" },
 	--         ╭──────────────────────────────────────────────────────────╮
 	--         │                          Notes                           │
 	--         ╰──────────────────────────────────────────────────────────╯
 
 	-- { import = "Edit.Note" },
-	-- { import = "Edit.Note.Neorg" },
+	{ import = "Edit.Note.Neorg" },
+	--if using NEORG  https://github.com/pysan3/Norg-Tutorial
 	--         ╭──────────────────────────────────────────────────────────╮
 	--         │                          Tools                           │
 	--         ╰──────────────────────────────────────────────────────────╯
+	--  ╭─────────╮
+	--  │  LSP    │
+	--  ╰─────────╯
+	{ import = "Tools.Lsp" }, -- Telescope | FUzzy finder
+	{ import = "Tools.Cmp.Cmp_0" }, -- Telescope | FUzzy finder
 	--  ╭───────────╮
 	--  │ Telescope │
 	--  ╰───────────╯
@@ -61,19 +66,47 @@ require("lazy").setup({
 	--  │ WhichKey │
 	--  ╰──────────╯
 	-- { import = "Tools.WhichKey.WF" }, -- WF | whichkey
-	{ import = "Tools.WhichKey.Clue" },
+	-- { import = "Tools.WhichKey.Clue" },
+	{ -- Key Sheet , use 'echasnovski/mini.clue',
+		"folke/which-key.nvim",
+		-- event = "InsertEnter",
+		-- keys = { "<leader>", '"', "z", "g", "<C-r>" },
+		-- dependencies = "roobert/surround-ui.nvim",
+		config = function()
+			require("UI.Wkeys")
+			-- some https://www.reddit.com/r/neovim/comments/15ay80f/a_good_snippet_if_you_use_whichkeynvim/
+			-- basically registers thign
+			-- function ClearReg()
+			-- 	print("Clearing registers")
+			-- 	vim.cmd([[
+			-- let regs=split('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/-"', '\zs')
+			-- for r in regs
+			-- call setreg(r, [])
+			-- endfor
+			-- ]])
+			-- end
+
+			-- --Make it so i can call ClearReg as a command
+			-- vim.api.nvim_create_user_command("ClearReg", function()
+			-- 	ClearReg()
+			-- end, {})
+			-- vim.o.timeout = true
+			-- vim.o.timeoutlen = 300
+		end,
+	},
 	--  ╭───────────╮
 	--  │ Formatter │
 	--  ╰───────────╯
 	{ import = "Tools.4mater" },
+	{ import = "Tools.Fundo" },
 	--  ╭───────────────╮
 	--  │ SpecialSearch │
 	--  ╰───────────────╯
 	{ import = "Tools.SsrSearch" }, -- TS basesd search
-	--  ╭────────────────────╮
-	--  │ Editing | Autopair │
-	--  ╰────────────────────╯
-	{ import = "Edit.Pair" }, -- Brackts, Parent, quotes, Completion
+	--  ╭───────────────────────────────╮
+	--  │  Editing | Autopair | Tabout  │
+	--  ╰───────────────────────────────╯
+	{ import = "Edit.Pair" }, -- Brackts, Parent, quotes, Completion, ultimate-autopair.
 	--  ╭──────────╮
 	--  │ Terminal │
 	--  ╰──────────╯
@@ -87,7 +120,7 @@ require("lazy").setup({
 	--  │ Markdown │
 	--  ╰──────────╯
 	-- { import = "Utils.Markdown" },
-	-- { import = "Utils.Markdown.Previewr" },
+	{ import = "Utils.Markdown.Previewr" },
 	--  ╭──────────────╮
 	--  │ Leap | Flash │
 	--  ╰──────────────╯
@@ -97,11 +130,13 @@ require("lazy").setup({
 	--  │ Git │
 	--  ╰─────╯
 	-- { import = "Code.Git.Diffview" },
+	-- { import = "Code.Git.GitSigns" },
 
-	--  ╭────────────╮
-	--  │ Bard | GPT │
-	--  ╰────────────╯
-	{ import = "Misc.AI" },
+	--  ╭─────────────────────────╮
+	--  │ Ai | Bard | GPT CoPilot │
+	--  ╰─────────────────────────╯
+	{ import = "Misc.AI.Bard" },
+	-- { import = "Misc.AI.Codeium" },
 
 	--  ╭───────────────────────────────────────╮
 	--  │  Registers | Yank,Yanky Paste | GPT   │
@@ -109,12 +144,12 @@ require("lazy").setup({
 	{ import = "Code.Reg.Reg" },
 	{ import = "Code.Reg.Ypaste" },
 
-	{ -- <CR> for Visual selection
-		"sustech-data/wildfire.nvim",
-		keys = "<CR>",
-		dependencies = { "nvim-treesitter/nvim-treesitter" },
-		opts = {},
-	},
+	-- { -- <CR> for Visual selection
+	-- 	"sustech-data/wildfire.nvim",
+	-- 	keys = "<CR>",
+	-- 	dependencies = { "nvim-treesitter/nvim-treesitter" },
+	-- 	opts = {},
+	-- },
 	-- Apearance
 
 	{ -- Start ify cow
@@ -128,6 +163,7 @@ require("lazy").setup({
 
 	{ -- NoMove of corsor in '<,>,=' movements
 		"gbprod/stay-in-place.nvim",
+		event = "BufReadPre",
 		config = function()
 			require("stay-in-place").setup({})
 		end,
@@ -142,31 +178,32 @@ require("lazy").setup({
 		end,
 	},
 
-	{ -- winbar on Top
-		"utilyre/barbecue.nvim",
-		event = "BufReadPost",
-		name = "barbecue",
-		dependencies = "SmiteshP/nvim-navic",
-		opts = {},
-	},
+	-- { -- Winbar on Top
+	-- 	"Bekaboo/dropbar.nvim",
+	-- 	dependencies = { "nvim-tree/nvim-web-devicons" },
+	-- 	event = "BufReadPost",
+	-- 	config = function()
+	-- 		vim.opt.mousemoveevent = true
+	-- 	end,
+	-- },
 
-	{ -- Tab Line
-		"romgrk/barbar.nvim",
-		event = "TabNew",
-		version = "^1.0.0", -- optional: only update when a new 1.x version is released
-		dependencies = {
-			"lewis6991/gitsigns.nvim",
-			-- {
-			-- 	"tiagovla/scope.nvim", -- join TAbs
-			-- 	config = function()
-			-- 		require("scope").setup({})
-			-- 	end,
-			-- },
-		},
-		config = function()
-			require("Misc.BarBar")
-		end,
-	},
+	-- { -- Tab Line
+	-- 	"romgrk/barbar.nvim",
+	-- 	event = "TabNew",
+	-- 	version = "^1.0.0", -- optional: only update when a new 1.x version is released
+	-- 	dependencies = {
+	-- 		"lewis6991/gitsigns.nvim",
+	-- 		-- {
+	-- 		-- 	"tiagovla/scope.nvim", -- join TAbs
+	-- 		-- 	config = function()
+	-- 		-- 		require("scope").setup({})
+	-- 		-- 	end,
+	-- 		-- },
+	-- 	},
+	-- 	config = function()
+	-- 		require("Misc.BarBar")
+	-- 	end,
+	-- },
 
 	{ -- statusline
 		"nvim-lualine/lualine.nvim",
@@ -176,7 +213,13 @@ require("lazy").setup({
 			"nvim-tree/nvim-web-devicons",
 		},
 		config = function()
-			require("Misc.evil_lualine")
+			-- 	require("Misc.evil_lualine")
+			require("lualine").setup({
+				options = {
+					--- @usage 'rose-pine' | 'rose-pine-alt'
+					theme = "rose-pine",
+				},
+			})
 		end,
 	},
 
@@ -191,31 +234,31 @@ require("lazy").setup({
 	-- Ui
 	{ -- Undo highlight
 		"tzachar/highlight-undo.nvim",
-		event = "BufReadPost",
+		keys = { "u", "U", "C-r" },
 		opts = true,
 	},
-	{ -- Colored Sperator windows
-		"nvim-zh/colorful-winsep.nvim",
-		event = { "WinNew" },
-		config = function()
-			require("colorful-winsep").setup({
-				-- highlight for Window separator
-				highlight = {
-					bg = "#1f1d2e", -- rose pine theme
-					fg = "#eb6f92",
-				},
-				no_exec_files = { "packer", "TelescopePrompt", "mason", "CompetiTest", "NvimTree", "sfm" },
-				-- Symbols for separator lines, the order: horizontal, vertical, top left, top right, bottom left, bottom right.
-				symbols = { "━", "┃", "┏", "┓", "┗", "┛" },
-				-- close_event = function()
-				--   -- Executed after closing the window separator
-				-- end,
-				-- create_event = function()
-				--   -- Executed after creating the window separator
-				-- end,
-			})
-		end,
-	},
+	-- { -- Colored Sperator windows
+	-- 	"nvim-zh/colorful-winsep.nvim",
+	-- 	event = { "WinNew" },
+	-- 	config = function()
+	-- 		require("colorful-winsep").setup({
+	-- 			-- highlight for Window separator
+	-- 			highlight = {
+	-- 				bg = "#1f1d2e", -- rose pine theme
+	-- 				fg = "#eb6f92",
+	-- 			},
+	-- 			no_exec_files = { "packer", "TelescopePrompt", "mason", "CompetiTest", "NvimTree", "sfm" },
+	-- 			-- Symbols for separator lines, the order: horizontal, vertical, top left, top right, bottom left, bottom right.
+	-- 			symbols = { "━", "┃", "┏", "┓", "┗", "┛" },
+	-- 			-- close_event = function()
+	-- 			--   -- Executed after closing the window separator
+	-- 			-- end,
+	-- 			-- create_event = function()
+	-- 			--   -- Executed after creating the window separator
+	-- 			-- end,
+	-- 		})
+	-- 	end,
+	-- },
 
 	{ -- Dynamic relative, Numbers
 		"sitiom/nvim-numbertoggle",
@@ -258,7 +301,7 @@ require("lazy").setup({
 
 	{ -- Last Location
 		"ethanholz/nvim-lastplace",
-		event = "BufReadPre",
+		-- event = "BufReadPre",
 		config = function()
 			require("nvim-lastplace").setup({
 				lastplace_ignore_buftype = { "quickfix", "nofile", "help" },
@@ -311,6 +354,13 @@ require("lazy").setup({
 	-- 	end,
 	-- },
 
+	{ -- auto-bullets for markdown-like filetypes
+		"dkarter/bullets.vim",
+		ft = "markdown",
+		config = function()
+			vim.g.bullets_delete_last_bullet_if_empty = 1
+		end,
+	},
 	{ -- Markdown Keys                     Only wors in Visual mode
 		"antonk52/markdowny.nvim", -- <c-e> = code block , <c-k> = link , <c-i> = italic , <c-b> = bold ,
 		ft = { "markdown", "txt", "md" },
@@ -363,18 +413,17 @@ require("lazy").setup({
 	{ -- Around Add/change/delete
 		"kylechui/nvim-surround",
 		-- should look into https://github.com/roobert/surround-ui.nvim
-		event = "BufReadPost",
+		keys = {
+			{ "ys", desc = "󰅪 Add Surround Operator" },
+			{ "yS", desc = "󰅪 Surround to EoL" },
+			{ "ds", desc = "󰅪 Delete Surround Operator" },
+			{ "cs", desc = "󰅪 Change Surround Operator" },
+			{ "s", mode = "x", desc = "󰅪 Add Surround Operator" },
+		},
 		config = function()
 			require("nvim-surround").setup()
 		end,
 	},
-
-	-- { -- indent
-	--  "shellRaining/hlchunk.nvim",
-	--    event = { "UIEnter" },
-	--     config = function()
-	--   require('Misc.Hl_chunk')
-	--     end },
 
 	-- {  -- indent
 	--    "lukas-reineke/indent-blankline.nvim",
@@ -394,7 +443,7 @@ require("lazy").setup({
 	--   end
 	-- },
 
-	{
+	{ -- visual Indent
 		"echasnovski/mini.indentscope",
 		event = "VeryLazy",
 		config = function()
@@ -463,90 +512,27 @@ require("lazy").setup({
 		},
 	},
 
-	--	{ -- Treesitter
-	--		"nvim-treesitter/nvim-treesitter",
-	--		-- event = { "BufReadPost", "InsertEnter" },
-	--		config = function()
-	--			require("Code.Tree_sit")
-	--		end,
-	--		dependencies = {
-	--			"HiPhish/rainbow-delimiters.nvim",
-	--			-- "nvim-treesitter/nvim-treesitter-textobjects",
-	--			-- "JoosepAlviste/nvim-ts-context-commentstring",
-	--		},
-	--	},
-
-	-- { -- LSP Base
-	-- 	"neovim/nvim-lspconfig",
-	-- 	event = "BufReadPost",
-	-- 	dependencies = { "williamboman/mason-lspconfig.nvim" },
-	-- 	servers = nil,
-	-- 	config = function()
-	-- 		require("Code.Code_s")
-	-- 	end,
-	-- },
-
-	-- this is pure magic, i love this guy
-	-- lsp in floating winodow https://github.com/max397574/dyn_help.nvim
-	{
-		"VonHeikemen/lsp-zero.nvim",
-		branch = "v2.x",
-		event = "BufReadPost",
+	{ -- Treesitter
+		-- YOU ALMOST CERTAINLY WANT A MORE ROBUST nvim-treesitter SETUP
+		-- see https://github.com/nvim-treesitter/nvim-treesitter
+		"nvim-treesitter/nvim-treesitter",
+		-- 	-- event = { "BufReadPost", "InsertEnter" },
 		dependencies = {
-			-- LSP Support
-			{ "neovim/nvim-lspconfig" }, -- Required
-			{ "williamboman/mason.nvim" }, -- Optional
-			{ "williamboman/mason-lspconfig.nvim" }, -- Optional
+			"HiPhish/rainbow-delimiters.nvim",
+			"nvim-treesitter/nvim-treesitter-textobjects",
+			-- 		-- "JoosepAlviste/nvim-ts-context-commentstring",
 		},
-		config = function()
-			require("Code.LSP_0w")
+		opts = {
+			auto_install = true,
+			highlight = {
+				enable = true,
+				additional_vim_regex_highlighting = false,
+			},
+		},
+		config = function(_, opts)
+			require("nvim-treesitter.configs").setup(opts)
 		end,
 	},
-
-	-- { -- Ui Lsp
-	-- 	"https://git.sr.ht/~whynothugo/lsp_lines.nvim", -- lines of Lsp
-	-- 	event = "BufReadPost",
-	-- 	config = function()
-	-- 		require("lsp_lines").setup()
-	-- 		vim.diagnostic.config({ virtual_lines = { only_current_line = true } })
-	-- 	end,
-	-- },
-
-	{ --  Completion
-		"hrsh7th/nvim-cmp",
-		event = "InsertEnter",
-		config = function()
-			require("Code.Cmp_0")
-		end,
-		dependencies = {
-			-- Snippets
-			-- { "L3MON4D3/LuaSnip", dependencies = "rafamadriz/friendly-snippets" },
-			-- "saadparwaiz1/cmp_luasnip",
-			"dcampos/nvim-snippy", -- minimal engine
-			"honza/vim-snippets", -- some snipped for snippy
-			"dcampos/cmp-snippy", -- cmp source of snippy
-			"onsails/lspkind.nvim", -- icon on Completion
-			-- Text
-			"f3fora/cmp-spell", -- spelling is bad 😔
-			"hrsh7th/cmp-buffer", -- suggestion form current file
-			"hrsh7th/cmp-emoji", -- super use : : emojie in colon
-			"hrsh7th/cmp-nvim-lsp", -- cmp form LSP idk?
-			-- Path
-			-- "FelipeLema/cmp-async-path", -- // paths cmp
-			"hrsh7th/cmp-path", -- paths //
-			-- 'dmitmel/cmp-digraphs',
-		},
-	},
-
-	-- { -- Tabout for nvim
-	-- 	"abecodes/tabout.nvim",
-	-- 	event = "InsertEnter",
-	-- 	config = function()
-	-- 		require("tabout").setup({})
-	-- 		vim.api.nvim_set_keymap("i", "<A-x>", "<Plug>(TaboutMulti)", { silent = true })
-	-- 		vim.api.nvim_set_keymap("i", "<A-z>", "<Plug>(TaboutBackMulti)", { silent = true })
-	-- 	end,
-	-- },
 
 	-- Cool
 	{ -- Art   Draw Ascii
@@ -620,24 +606,11 @@ require("lazy").setup({
 
 	{ -- middle scroll end of line
 		"Aasim-A/scrollEOF.nvim",
-		event = "BufReadPost",
+		event = "CursorMoved",
 		config = function()
 			require("scrollEOF").setup()
 		end,
 	},
-
-	-- { -- Neorg
-	-- 	"nvim-neorg/neorg",
-	-- 	ft = "norg",
-	-- 	cmd = "Neorg",
-	-- 	dependencies = {
-	-- 		{ "nvim-lua/plenary.nvim" },--[[  { "nvim-neorg/neorg-telescope" },  ]]
-	-- 	},
-	-- 	build = "<CMD>Neorg sync-parsers<CR>",
-	-- 	config = function()
-	-- 		require("N_org")
-	-- 	end,
-	-- },
 
 	-- 'rcarriga/nvim-notify',
 
@@ -707,29 +680,24 @@ require("lazy").setup({
 	--
 
 	-- "sindrets/diffview.nvim",
-	-- {
-	-- 	"lewis6991/gitsigns.nvim",
-	-- 	config = function()
-	-- 		require("gitsigns").setup()
-	-- 	end,
-	-- },
 
 	{ -- Hex Editing
 		"RaafatTurki/hex.nvim",
 		cmd = { "HexToggle", "HexDump" },
 		opts = true,
 	},
-	-- {
-	-- 	"jcdickinson/codeium.nvim",
-	-- 	dependencies = { "nvim-lua/plenary.nvim", "hrsh7th/nvim-cmp" },
-	-- },
-	{
+	{ -- Change Cases using 'ga~~~~~~'
 		"johmsalas/text-case.nvim",
+		keys = "ga",
 		config = function()
 			require("textcase").setup({})
 			require("telescope").load_extension("textcase")
-			vim.api.nvim_set_keymap("n", "ga.", "<cmd>TextCaseOpenTelescope<CR>", { desc = "Telescope" })
-			vim.api.nvim_set_keymap("v", "ga.", "<cmd>TextCaseOpenTelescope<CR>", { desc = "Telescope" })
+			vim.api.nvim_set_keymap("n", "ga/", "<cmd>TextCaseOpenTelescope<CR>", { desc = "Telescope" }) -- for normal mode only
+			vim.api.nvim_set_keymap("x", "ga/", "<cmd>TextCaseOpenTelescope<CR>", { desc = "Telescope" }) -- for Visual mode only
 		end,
+	},
+	{ -- Buffer managemenet
+		"Pheon-Dev/buffalo-nvim",
+		enabled = false,
 	},
 }, {})
