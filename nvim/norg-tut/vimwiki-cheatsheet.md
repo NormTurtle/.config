@@ -56,3 +56,12 @@ _[number] refers to the wiki number, set by the order in your vimrc. The default
 `i\`	inner table cell
 `ac`	table column
 `ic`	inner table column
+
+
+
+
+**BOld**
+*italic* 
+__undrleine__
+
+

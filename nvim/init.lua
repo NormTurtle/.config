@@ -1,5 +1,4 @@
 --  echo "<0_0>🗿"
--- Example config in lua
 
 -- Leader key before replace <SPACE>
 vim.g.mapleader = " "
@@ -9,11 +8,11 @@ vim.g.maplocalleader = " "
 require("Lazy")
 -- Neovide
 if vim.g.neovide then
-	require("Neovide")
+  require("Neovide")
 end
 
 -- -- setting nvim
-require("Options")
+require("Option_s")
 require("Autocmd")
 
 -- Vimscript for things i dont't know lua
@@ -24,6 +23,9 @@ vim.cmd([[
  ]])
 -- Command Abbreviations, I can't release my shift key fast enough :')
 vim.cmd("cnoreabbrev Q  q")
+vim.cmd("cnoreabbrev q1  q!")
+vim.cmd("cnoreabbrev Q1  q!")
+vim.cmd("cnoreabbrev Qa1 qa!")
 vim.cmd("cnoreabbrev Qa qa")
 vim.cmd("cnoreabbrev W  w")
 vim.cmd("cnoreabbrev Wq wq")
@@ -34,8 +36,10 @@ vim.cmd("cnoreabbrev WQ wq")
 -- vim.cmd("au ColorScheme * hi Normal ctermbg=none guibg=none") -- Dimming | dim
 -- local colorscheme = "oh-lucy"
 -- local colorscheme = "oh-lucy-evening"
--- local colorscheme = "aura"
+-- local colorscheme = "aura-dark-soft-text"
+-- aura-dark, aura-dark-soft-text,aura-soft-dark,aura-soft-dark-soft-text
 local colorscheme = "rose-pine"
+-- local colorscheme = "tokyonight"
 -- require("UI.Colors.rosepine")
 -- local colorscheme = "blue-moon"
 -- local colorscheme = "kanagawa-dragon"   -- kanagawa
@@ -44,9 +48,9 @@ local colorscheme = "rose-pine"
 -- local colorscheme = "catppuccin-macchiato"
 local colored, _ = pcall(vim.cmd, "colorscheme " .. colorscheme)
 if not colored then
-	print("Colorscheme not found! Set to habamax") -- print error if colorscheme not installed
-	vim.cmd("colorscheme habamax")
-	return
+  print("Colorscheme not found! Set to habamax") -- print error if colorscheme not installed
+  vim.cmd("colorscheme habamax")
+  return
 end
 -- Window Separator
 -- vim.api.nvim_set_hl(0, 'WinSeparator', { bg = '#1f1d2e', fg = '#eb6f92' })
@@ -79,7 +83,9 @@ end
 
 --  Keymaps
 -- Leader is set before Lazy
+-- vim.api.nvim_set_keymap('n', 'U', '<C-r>', { noremap = true } )
 local key = vim.keymap -- for ease
+vim.api.nvim_set_keymap('n', 'U', '<C-R>', { noremap = true } )
 
 -- More text object
 key.set("o", "ar", "a]") -- [r]ectangular bracket
@@ -97,30 +103,30 @@ key.set("o", "iz", "i'")
 key.set("n", "<C-ScrollWheelUp>", ":set guifont=+<CR>")
 key.set("n", "<C-ScrollWheelDown>", ":set guifont=-<CR>")
 
--- Line movement
-key.set("n", "j", "gj") -- move vert by visual line
-key.set("n", "k", "gk") -- move vert by visual line
+-- Line movement Soft wrap movement fix
+-- key.set("n", "j", "gj") -- move vert by visual line
+-- key.set("n", "k", "gk") -- move vert by visual line
 
 -- go to  beginning and end , now hadnel with readline
 -- key.set("i", "<C-b>", "<HOME>") -- "beginning of line"
 -- key.set("i", "<C-e>", "<End>")--"end of line" },
 
 -- navigate within  insert and cmd-lin
-key.set("i", "<M-h>", "<Left>") --"move left"
+key.set("i", "<M-h>", "<Left>")  --"move left"
 key.set("i", "<M-l>", "<Right>") -- "move right"
-key.set("i", "<M-j>", "<Down>") --  "move down"
-key.set("i", "<M-k>", "<Up>") --  "move up"
+key.set("i", "<M-j>", "<Down>")  --  "move down"
+key.set("i", "<M-k>", "<Up>")    --  "move up"
 
-key.set("c", "<M-h>", "<Left>") --"move left"
+key.set("c", "<M-h>", "<Left>")  --"move left"
 key.set("c", "<M-l>", "<Right>") -- "move right"
-key.set("c", "<M-j>", "<Down>") --  "move down"
-key.set("c", "<M-k>", "<Up>") --  "move up"
+key.set("c", "<M-j>", "<Down>")  --  "move down"
+key.set("c", "<M-k>", "<Up>")    --  "move up"
 
 key.set("i", "<C-f>", "<Right>") -- forward-char
-key.set("i", "<C-b>", "<Left>") -- backward-char
+key.set("i", "<C-b>", "<Left>")  -- backward-char
 
 key.set("c", "<C-f>", "<Right>") -- forward-char
-key.set("c", "<C-b>", "<Left>") -- backward-char
+key.set("c", "<C-b>", "<Left>")  -- backward-char
 
 -- Manipulation in insert mode - cmd mode
 key.set("i", "<C-l>", "<Del>") -- delete like <delete> key to the right
@@ -128,10 +134,10 @@ key.set("c", "<C-l>", "<Del>") -- delete like <delete> key to the right
 -- key.set('i', '<C-h>', '<BS>') -- delete like <backspace> key to the left  😂 neovim has it default
 
 -- Nvim is EMacs now
-key.set("i", "<M-b>", "<S-Left>") --"move left"
+key.set("i", "<M-b>", "<S-Left>")  --"move left"
 key.set("i", "<M-f>", "<S-Right>") -- "move right"
 
-key.set("c", "<M-b>", "<S-Left>") --"move left"
+key.set("c", "<M-b>", "<S-Left>")  --"move left"
 key.set("c", "<M-f>", "<S-Right>") -- "move right"
 
 -- highlight last edited or inserted text
@@ -147,29 +153,29 @@ key.set("n", "<leader>LL", "<cmd>Lazy<cr>")
 --key.set("n", "<leader>P", ":e "$profile"<CR>")
 
 -- Splits  & windows
-key.set("n", "<leader>sh", "<C-w>v") -- split window vert
-key.set("n", "<leader>sv", "<C-w>s") -- split window horiz
-key.set("n", "<leader>se", "<C-w>=") -- make window equal width
+key.set("n", "<leader>sh", "<C-w>v")     -- split window vert
+key.set("n", "<leader>sv", "<C-w>s")     -- split window horiz
+key.set("n", "<leader>se", "<C-w>=")     -- make window equal width
 key.set("n", "<leader>sx", ":close<CR>") -- close current split
 
 -- Tabs
-key.set("n", "<leader>to", ":tabnew<CR>") -- open new Tab
+key.set("n", "<leader>to", ":tabnew<CR>")   -- open new Tab
 key.set("n", "<leader>tx", ":tabclose<CR>") -- close current tab
-key.set("n", "<leader>tn", ":tabn<CR>") -- go to next tab
-key.set("n", "<leader>tp", ":tabp<CR>") -- go to prev tab
+key.set("n", "<leader>tn", ":tabn<CR>")     -- go to next tab
+key.set("n", "<leader>tp", ":tabp<CR>")     -- go to prev tab
 
 -- buffers
-key.set("n", "<leader>q", ":q<CR>") -- close buffer
-key.set("n", "<M-q>", "<cmd>q<cr>") -- close buffer
+key.set("n", "<leader>q", ":q<CR>")  -- close buffer
+key.set("n", "<M-q>", "<cmd>q<cr>")  -- close buffer
 key.set("n", "<leader>n", ":bn<CR>") -- go to next tab
 key.set("n", "<leader>p", ":bp<CR>") -- go to prev tab
 
 -- Copy paste
 -- key.set('n', '<C-s>', ':w<CR>') -- Save
-key.set("v", "<C-c>", '"+y') -- Copy
-key.set("n", "<C-V>", '"+P') -- Paste normal mode
-key.set("v", "<C-v>", '"+P') -- Paste visual mode
-key.set("c", "<C-v>", "<C-R>+") -- Paste command mode
+key.set("v", "<C-c>", '"+y')         -- Copy
+key.set("n", "<C-V>", '"+P')         -- Paste normal mode
+key.set("v", "<C-v>", '"+P')         -- Paste visual mode
+key.set("c", "<C-v>", "<C-R>+")      -- Paste command mode
 key.set("i", "<C-v>", '<ESC>l"+Pli') -- Paste insert mode
 
 -- Plugin Binding

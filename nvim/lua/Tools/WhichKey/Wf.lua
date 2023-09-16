@@ -1,3 +1,6 @@
+--  ╭──────────────────────╮
+--  │ Helix like which-key │
+--  ╰──────────────────────╯
 return {
 
 	-- { -- Modern Which key

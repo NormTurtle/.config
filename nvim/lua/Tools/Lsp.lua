@@ -1,6 +1,7 @@
 M = {
 	-- this is pure magic, i love this guy
 	-- lsp in floating winodow https://github.com/max397574/dyn_help.nvim
+    -- for Lint https://github.com/mfussenegger/nvim-lint
 	{
 		"VonHeikemen/lsp-zero.nvim",
 		branch = "v2.x",

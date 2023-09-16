@@ -1,2 +1,0 @@
-# .config
-copy of .config/

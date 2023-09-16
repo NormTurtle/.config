@@ -3,7 +3,13 @@
 --  ╰──────────╯
 vim.keymap.set("n", "<leader>e", "<cmd>SFMToggle<CR>",{desc ="SFM Tree"} ) -- toogle exp file
 
-return {
+M = {
+
+
+
+
+
+{
   'dinhhuy258/sfm.nvim',
   cmd = "SFMToggle",
   dependencies = {
@@ -105,4 +111,12 @@ return {
     -- sfm_explorer:load_extension "sfm-paste" -- Only MacOs  Right Now
 
     end
+},
+  { -- Oil
+    "stevearc/oil.nvim",
+    init = function()
+      require("Fm.Oil")
+    end,
+  },
 }
+return M
